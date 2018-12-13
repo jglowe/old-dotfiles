@@ -10,7 +10,6 @@
 
 " Brings vim into this century/decade
 set nocompatible
-filetype off                  " required
 
 " turn absolute line numbers on
 set number
@@ -52,6 +51,7 @@ autocmd Filetype cpp set colorcolumn=80 |
                      match OverLength /\%81v.\+/
 autocmd Filetype ocaml setlocal expandtab tabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2
+autocmd Filetype vim setlocal expandtab tabstop=2 shiftwidth=2
 
 " Turns tab when in a word to autocomplete
 function! Tab_Or_Complete()
@@ -84,48 +84,30 @@ nnoremap <C-H> <C-W><C-H>
 " Plugin Installation
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'            " Vundle updates itself
-Plugin 'itchyny/lightline.vim'           " The nice bar below
-Plugin 'itchyny/vim-gitbranch'           " Adds git info to bar below
-Plugin 'junegunn/fzf'                    " Fuzy finder pt1
-Plugin 'junegunn/fzf.vim'                " Fuzy finder pt2
+Plug 'itchyny/lightline.vim'           " The nice bar below
+Plug 'itchyny/vim-gitbranch'           " Adds git info to bar below
 if v:version < 800
-  Plugin 'vim-syntastic/syntastic'       " Syntax Checker
+  Plug 'vim-syntastic/syntastic'       " Syntax Checker
 else
-  Plugin 'w0rp/ale'                      " Async linter Need to install linter though
-  Plugin 'maximbaz/lightline-ale'        " Adds ale info to bar below
+  Plug 'w0rp/ale'                      " Async linter Need to install linter though
+  Plug 'maximbaz/lightline-ale'        " Adds ale info to bar below
 endif
-Plugin 'airblade/vim-gitgutter'          " Shows changes in vim for git
-Plugin 'tpope/vim-eunuch'                " Adds commands like mkdir to vim
-Plugin 'krisajenkins/vim-projectlocal'   " Allows editor configs for different projects!
-Plugin 'scrooloose/nerdtree'             " Adds filetree to left
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'bronson/vim-trailing-whitespace' " Highlites trailing space in red
-Plugin 'majutsushi/tagbar'               " Code Structure on right
-Plugin 'reasonml-editor/vim-reason-plus'
-Plugin 'chriskempson/base16-vim'
-Plugin 'mark-westerhof/vim-lightline-base16'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
+Plug 'airblade/vim-gitgutter'          " Shows changes in vim for git
+Plug 'tpope/vim-eunuch'                " Adds commands like mkdir to vim
+Plug 'scrooloose/nerdtree'             " Adds filetree to left
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'bronson/vim-trailing-whitespace' " Highlites trailing space in red
+Plug 'majutsushi/tagbar'               " Code Structure on right
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'chriskempson/base16-vim'
+Plug 'mark-westerhof/vim-lightline-base16'
+Plug 'edkolev/tmuxline.vim'
+Plug 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
+"Plug 'krisajenkins/vim-projectlocal'   " Allows editor configs for different projects!
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
