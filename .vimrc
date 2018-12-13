@@ -12,8 +12,8 @@
 set nocompatible
 
 " turn absolute line numbers on
-set number
-set nu
+set number relativenumber
+set nu rnu
 
 " turn absolute line numbers off
 "set nonumber
@@ -23,26 +23,20 @@ set nu
 "set number!
 "set nu!
 
-" Sets the path to include the files in this subdirectory
-set path+=**
-
-" Sets the menu
-set wildmenu
-
-" Makes ctags
-command! MakeTags !ctags -R .
-
-" Shows line number and syntax hightliting
-set number
+" syntax hightliting
 syntax on
+
+" Enables file undo after files close
+set undofile
+set undodir=~/.vim/undodir
+
+" Makes backspace to behave like most text editors
+set backspace=indent,eol,start
 
 " Deals with tab sillyness for default settings
 set expandtab
 set tabstop=4
 set shiftwidth=4
-
-" Changes backspace to behave like most text editors
-set backspace=indent,eol,start
 
 " Changes tab settings for specific languages
 autocmd Filetype sh set expandtab&
@@ -73,6 +67,14 @@ endfunction
 
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 inoremap <S-Tab> <C-R>=Shift_Tab_Or_Complete()<CR>
+set complete-=i
+
+" Makes ctags
+command! MakeTags !ctags -R .
+
+" Sets the path to include the files in this subdirectory
+set path+=**
+set wildmenu
 
 " Vim mappings
 nnoremap <C-J> <C-W><C-J>
@@ -105,7 +107,8 @@ Plug 'chriskempson/base16-vim'
 Plug 'mark-westerhof/vim-lightline-base16'
 Plug 'edkolev/tmuxline.vim'
 Plug 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
-"Plug 'krisajenkins/vim-projectlocal'   " Allows editor configs for different projects!
+Plugin 'LucHermitte/lh-vim-lib'        " See below
+Plugin 'LucHermitte/local_vimrc'       " project local vimrc
 
 call plug#end()
 
@@ -157,6 +160,13 @@ if v:version >= 800
         \  [ 'lineinfo' ]
         \ ]
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" local_vimrc settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:local_vimrc = ['.config', '_vimrc_local.vim']
+call lh#local_vimrc#munge('whitelist', $HOME.'/git')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tmuxline settings
