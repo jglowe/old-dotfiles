@@ -107,8 +107,9 @@ Plug 'chriskempson/base16-vim'
 Plug 'mark-westerhof/vim-lightline-base16'
 Plug 'edkolev/tmuxline.vim'
 Plug 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
-Plugin 'LucHermitte/lh-vim-lib'        " See below
-Plugin 'LucHermitte/local_vimrc'       " project local vimrc
+Plug 'LucHermitte/lh-vim-lib'          " See below
+Plug 'LucHermitte/local_vimrc'         " project local vimrc
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 
