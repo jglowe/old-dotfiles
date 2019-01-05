@@ -76,6 +76,15 @@ command! MakeTags !ctags -R .
 set path+=**
 set wildmenu
 
+" Sets autocomplete tab to only complete common characters for the first tab.
+" By default it autocompletes to the first item in the list, which you can tab
+" through.
+set completeopt=longest,menuone
+
+" Makes enter act as autocomplete select if an item is selected.
+" By default it acts like enter
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " Vim mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -133,10 +142,10 @@ let g:lightline = {
     \ },
     \ }
 
+let g:lightline.colorscheme = 'base16_classic_dark'
+
 "let g:lightline.separator = { 'left': '⮀', 'right': '⮂' }
 "let g:lightline.subseparator = { 'left': '⮁', 'right': '⮃' }
-
-let g:lightline.colorscheme = 'base16_classic_dark'
 
 " Ale lightline settings
 if v:version >= 800
@@ -197,6 +206,9 @@ colorscheme base16-classic-dark
 if v:version >= 800
   set termguicolors
 endif
+
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTREE settings
