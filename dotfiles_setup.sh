@@ -2,11 +2,19 @@
 
 
 if [ ! -L ~/.bashrc ]; then
-	if [ -f ~/.bashrc ]; then
-		mv ~/.bashrc "~/.bashrc-$(date +%Y-%m-%d-%H:%M:%S).old"
+	if [ -f "~/.bashrc" ]; then
+		mv "$HOME/.bashrc" "$HOME/.bashrc-$(date +%Y-%m-%d-%H:%M:%S).old"
 	fi
 
 	ln -s "$(pwd)/.bashrc" ~/.bashrc
+fi
+
+if [ ! -L ~/.bash_aliases ]; then
+	if [ -f "~/.bash_aliases" ]; then
+		mv "$HOME/.bash_aliases" "$HOME/.bash_aliases-$(date +%Y-%m-%d-%H:%M:%S).old"
+	fi
+
+	ln -s "$(pwd)/.bash_aliases" ~/.bash_aliases
 fi
 
 if [ ! -L ~/.gitconfig ]; then

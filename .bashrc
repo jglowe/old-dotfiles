@@ -128,3 +128,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 # Change bash prompt
 export PS1="[\u@\h \W]\\$ "
+export EDITOR='vim'
