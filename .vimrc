@@ -38,17 +38,50 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
+" Search settings
+set incsearch
+set hlsearch
+
+set colorcolumn=81
+
 " Changes tab settings for specific languages
 autocmd Filetype sh set expandtab&
-autocmd Filetype cpp set colorcolumn=80 |
-                     highlight OverLength ctermbg=red ctermfg=white guibg=red |
-                     match OverLength /\%81v.\+/
 autocmd Filetype ocaml setlocal expandtab tabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2
 autocmd Filetype vim setlocal expandtab tabstop=2 shiftwidth=2
 
+autocmd Filetype markdown setlocal textwidth=80
+
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+
 " Turns tab when in a word to autocomplete
 function! Tab_Or_Complete()
+  if &filetype == "ocaml"
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\(\w\|\.\)'
+      return pumvisible() ? "\<C-o>" : "\<C-x>\<C-o>"
+    else
+      return "\<Tab>"
+    endif
+  endif
   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
     return "\<C-N>"
   else
@@ -68,9 +101,6 @@ endfunction
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 inoremap <S-Tab> <C-R>=Shift_Tab_Or_Complete()<CR>
 set complete-=i
-
-" Makes ctags
-command! MakeTags !ctags -R .
 
 " Sets the path to include the files in this subdirectory
 set path+=**
@@ -107,6 +137,7 @@ else
 endif
 Plug 'airblade/vim-gitgutter'          " Shows changes in vim for git
 Plug 'tpope/vim-eunuch'                " Adds commands like mkdir to vim
+Plug 'tpope/vim-fugitive'              " git integration
 Plug 'scrooloose/nerdtree'             " Adds filetree to left
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bronson/vim-trailing-whitespace' " Highlites trailing space in red
@@ -118,7 +149,9 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
 Plug 'LucHermitte/lh-vim-lib'          " See below
 Plug 'LucHermitte/local_vimrc'         " project local vimrc
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'    " Manages tags
+Plug 'christoomey/vim-tmux-navigator'  " Tmux Integration
+Plug 'ericcurtin/CurtineIncSw.vim'     " Navigate between .ccp and .h files
 
 call plug#end()
 
@@ -172,6 +205,17 @@ if v:version >= 800
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-tmux-navigator settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-H> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local_vimrc settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -209,6 +253,12 @@ endif
 
 hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CurtineIncSw cpp-h file navigator settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <F5> :call CurtineIncSw()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTREE settings
@@ -315,3 +365,6 @@ for tool in s:opam_packages
   endif
 endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
+
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
