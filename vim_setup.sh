@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ ! -L ~/.vimrc ]; then 
-	if [ -f ~/.vimrc ]; then
-		mv ~/.vimrc "~/.vimrc-$(date +%Y-%m-%d-%H:%M:%S).old"
+if [ ! -L "$HOME/.vimrc" ]; then
+	if [ -f "$HOME/.vimrc" ]; then
+		mv "$HOME/.vimrc" "$HOME/.vimrc-$(date +%Y-%m-%d-%H:%M:%S).old"
 	fi
 
-	ln -s "$(pwd)/.vimrc" ~/.vimrc
+	ln -s "$(pwd)/.vimrc" "$HOME/.vimrc"
 fi
 
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
