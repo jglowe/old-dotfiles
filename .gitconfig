@@ -3,7 +3,9 @@
 	name = Jonathan Lowe
 
 [core]
-    editor = fim
+    editor = vim
+	excludesfile = ~/.gitignore_global
+
 [alias]
     f       = !git fetch && git rebase && git-submodule update --init
     c-p     = cherry-pick
