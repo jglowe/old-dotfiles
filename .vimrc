@@ -44,6 +44,23 @@ set hlsearch
 
 set colorcolumn=81
 
+" Folding code defaults
+set foldmethod=syntax
+"set foldnestmax=1
+
+function! NeatFoldText() "{{{2
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
+" }}}2
+
 " Changes tab settings for specific languages
 autocmd Filetype sh set expandtab&
 autocmd Filetype ocaml setlocal expandtab tabstop=2 shiftwidth=2
@@ -129,6 +146,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'itchyny/lightline.vim'           " The nice bar below
 Plug 'itchyny/vim-gitbranch'           " Adds git info to bar below
+Plug 'mark-westerhof/vim-lightline-base16'
 if v:version < 800
   Plug 'vim-syntastic/syntastic'       " Syntax Checker
 else
@@ -144,7 +162,6 @@ Plug 'bronson/vim-trailing-whitespace' " Highlites trailing space in red
 Plug 'majutsushi/tagbar'               " Code Structure on right
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'chriskempson/base16-vim'
-Plug 'mark-westerhof/vim-lightline-base16'
 Plug 'edkolev/tmuxline.vim'
 Plug 'terryma/vim-smooth-scroll'       " Makes scrolling smooth
 Plug 'LucHermitte/lh-vim-lib'          " See below
@@ -152,6 +169,8 @@ Plug 'LucHermitte/local_vimrc'         " project local vimrc
 Plug 'ludovicchabant/vim-gutentags'    " Manages tags
 Plug 'christoomey/vim-tmux-navigator'  " Tmux Integration
 Plug 'ericcurtin/CurtineIncSw.vim'     " Navigate between .ccp and .h files
+Plug 'bounceme/poppy.vim'              " Highlight parentheses
+Plug 'rgrinberg/vim-ocaml'
 
 call plug#end()
 
@@ -203,6 +222,12 @@ if v:version >= 800
         \  [ 'lineinfo' ]
         \ ]
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-ocaml settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:ocaml_folding=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-tmux-navigator settings
