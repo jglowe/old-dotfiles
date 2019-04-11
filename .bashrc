@@ -44,7 +44,7 @@ parse_git_branch() {
 # Colorizes the bash prompt if it is supported.
 ncolors=$(tput colors)
 if test -t 1 && test -n "$ncolors" && test "$ncolors" -ge 8; then
-	export PS1="\[\e[1m\][\[\e[32m\]\u\[\e[97m\]@\[\e[35m\]\h \[\e[34m\]\W\[\e[97m\]]\[\e[33m\]\$(parse_git_branch)\[\e[97m\] \\$\[\e[0m\] "
+	export PS1="[\u@\h \[\e[34m\]\W\[\e[97m\]]\[\e[33m\]\$(parse_git_branch)\[\e[97m\] \\$\[\e[0m\] "
 else
 	export PS1="[\u@\h \W]\$(parse_git_branch) \\$ "
 fi
