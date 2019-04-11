@@ -48,6 +48,8 @@ set colorcolumn=81
 set foldmethod=syntax
 "set foldnestmax=1
 
+autocmd Filetype cpp set foldmethod=indent
+
 function! NeatFoldText() "{{{2
   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
@@ -171,6 +173,7 @@ Plug 'christoomey/vim-tmux-navigator'  " Tmux Integration
 Plug 'ericcurtin/CurtineIncSw.vim'     " Navigate between .ccp and .h files
 Plug 'bounceme/poppy.vim'              " Highlight parentheses
 Plug 'rgrinberg/vim-ocaml'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -224,9 +227,14 @@ if v:version >= 800
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-ocaml settings
+" vim-commentary settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+autocmd FileType cpp setlocal commentstring=//%s
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-ocaml settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ocaml_folding=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
