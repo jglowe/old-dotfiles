@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if [ ! -L "$HOME/.vimrc" ]; then
-	if [ -f "$HOME/.vimrc" ]; then
-		mv "$HOME/.vimrc" "$HOME/.vimrc-$(date +%Y-%m-%d-%H:%M:%S).old"
-	fi
+# Vim's dotfiles are added in dotfiles_setup.sh
 
-	ln -s "$(pwd)/.vimrc" "$HOME/.vimrc"
-fi
-
+# Adds vim's plugin manager
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

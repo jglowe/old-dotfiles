@@ -19,9 +19,7 @@ link_dotfile ".gitconfig"
 link_dotfile ".gitignore_global"
 link_dotfile ".tmux.conf"
 link_dotfile ".alacritty.yml"
-
-if [ ! -d "${HOME}/.config/base16-shell" ]; then
-	git clone https://github.com/chriskempson/base16-shell.git "${HOME}/.config/base16-shell"
-fi
+link_dotfile ".vimrc"
 
 ./vim_setup.sh
+./bash_setup.sh

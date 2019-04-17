@@ -144,6 +144,13 @@ nnoremap <C-H> <C-W><C-H>
 " Plugin Installation
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" TODO -- maybe add later
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'itchyny/lightline.vim'           " The nice bar below
