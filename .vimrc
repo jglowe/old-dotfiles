@@ -63,6 +63,12 @@ endfunction
 set foldtext=NeatFoldText()
 " }}}2
 
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
+
 " Changes tab settings for specific languages
 autocmd Filetype sh set expandtab&
 autocmd Filetype ocaml setlocal expandtab tabstop=2 shiftwidth=2
