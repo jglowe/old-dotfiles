@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Bash's dotfiles are added in dotfiles_setup.sh
+# Bash's dotfiles are added in install.sh
 
 # Sets up the base16 bash configs
 if [ ! -d "${HOME}/.config/base16-shell" ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Vim's dotfiles are added in dotfiles_setup.sh
+# Vim's dotfiles are added in install.sh
 
 # Adds vim's plugin manager
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
